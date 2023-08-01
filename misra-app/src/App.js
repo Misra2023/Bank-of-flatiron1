@@ -1,68 +1,110 @@
-import React, { useEffect, useState } from "react"
+import React, { useState, useEffect } from 'react';
+import transactionsData from './db.json';
 
-function App() {
+const App = () => {
   const [transactions, setTransactions] = useState([]);
-  const [search, setSearch] = useState("");
+  const [newTransaction, setNewTransaction] = useState({
+    date: '',
+    description: '',
+    category: '',
+    amount: 0,
+  });
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortType, setSortType] = useState('none');
 
+  // Set the initial state for transactions with data from transactionsData
   useEffect(() => {
-    fetch("https://codechallengeone.vercel.app/transactions")
-      .then((res) => res.json())
-      .then((data) => setTransactions(data));
+    setTransactions(transactionsData.transactions);
   }, []);
 
-  const handleSearching = (searchValue) => {
-    setSearch(searchValue);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const newId = Math.random();
+    const formattedAmount = parseFloat(newTransaction.amount);
+    if (!isNaN(formattedAmount)) {
+      const newTransactionData = {
+        id: newId,
+        ...newTransaction,
+        amount: formattedAmount,
+      };
+      setTransactions([...transactions, newTransactionData]);
+      setNewTransaction({
+        date: '',
+        description: '',
+        category: '',
+        amount: 0,
+      });
+    }
   };
 
-  
+  const handleDelete = (id) => {
+    const updatedTransactions = transactions.filter((transaction) => transaction.id !== id);
+    setTransactions(updatedTransactions);
+  };
 
-  const filteredTransactions = transactions.filter((transaction) =>
-    transaction.description.toLowerCase().includes(search.toLowerCase())
+  const handleSortChange = (e) => {
+    setSortType(e.target.value);
+  };
+
+  const sortedTransactions = transactions.slice().sort((a, b) => {
+    if (sortType === 'category') {
+      return a.category.localeCompare(b.category);
+    } else if (sortType === 'description') {
+      return a.description.localeCompare(b.description);
+    } else {
+      return 0;
+    }
+  });
+
+  const filteredTransactions = sortedTransactions.filter((transaction) =>
+    transaction.description.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className="ui raised segment">
-      <div className="ui segment violet inverted">
-        <h2>The Royal Bank of Flatiron</h2>
-      </div>
-      {/* Render Search Input */}
-      <div className="ui large fluid icon input">
-        <input
-          type="text"
-          placeholder="Search your Recent Transactions"
-          onChange={(e) => {
-            handleSearching(e.target.value);
-          }}
-        />
-        <i
-          className="circular search link icon"
-          onClick={() => {
-            handleSearching(search);
-          }}
-        ></i>
-      </div>
-
-      {/* Add Transaction Form */}
-      {/* Implement your form here */}
-
-      {/* Render TransactionList */}
-      <TransactionList transactions={filteredTransactions} />
+    <div>
+      <h1>Transactions</h1>
+      <form onSubmit={handleSubmit}>
+        <button type="submit">Add Transaction</button>
+      </form>
+      <input
+        type="text"
+        placeholder="Search by description"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <label htmlFor="sortSelect">Sort by:</label>
+      <select id="sortSelect" onChange={handleSortChange}>
+        <option value="none">None</option>
+        <option value="category">Category</option>
+        <option value="description">Description</option>
+      </select>
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Amount</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filteredTransactions.map((transaction) => (
+            <tr key={transaction.id}>
+              <td>{transaction.date}</td>
+              <td>{transaction.description}</td>
+              <td>{transaction.category}</td>
+              <td>{transaction.amount}</td>
+              <td>
+                <button onClick={() => handleDelete(transaction.id)}>Delete</button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
-}
-
-function TransactionList({ transactions }) {
-  const trans = transactions.map((transObj, index) => {
-    return (
-      <tr key={index}>
-        <td>{transObj.date}</td>
-        <td>{transObj.category}</td>
-        <td>{transObj.description}</td>
-        <td>{transObj.amount}</td>
-      </tr>
-    );
-  });
-  return <tbody>{trans}</tbody>;
-}
+};
 
 export default App;
+
