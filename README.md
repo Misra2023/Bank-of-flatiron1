@@ -1,6 +1,47 @@
 # Getting Started with Create React App
+React Transactions App
+This is a simple React application that allows users to manage their transactions. Users can add new transactions, search for transactions by description, sort transactions by category or description, and delete existing transactions. The data for transactions is provided through a local JSON file (db.json), and the application uses React's state management and useEffect hook to handle the data and update the user interface dynamically.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Features
+Add Transaction: Users can add new transactions by entering the date, description, category, and amount in the form fields and clicking the "Add Transaction" button. The new transaction is then added to the list of existing transactions displayed on the page.
+
+Search Transactions: Users can search for specific transactions by their description. As the user types in the search input field, the list of transactions is dynamically filtered to display only those transactions whose description matches the entered search term (case-insensitive).
+
+Sort Transactions: Users can sort the list of transactions by either category or description. A dropdown menu allows the user to select the sorting option, and the transactions are re-arranged accordingly. If the user selects "None," the transactions are displayed in their original order.
+
+Delete Transaction: Each transaction displayed in the table has a "Delete" button next to it. Clicking this button removes the corresponding transaction from the list of transactions.
+
+Components
+App Component (App.js)
+This is the main component of the application that manages the state for transactions, newTransaction, searchTerm, and sortType. It fetches the initial data from db.json using the useEffect hook and stores it in the transactions state. The component renders the following:
+
+A form to add new transactions with input fields for date, description, category, and amount.
+An input field for searching transactions by description.
+A dropdown menu for selecting the sorting type (category or description).
+A table to display the list of transactions with columns for Date, Description, Category, Amount, and Action (Delete button).
+The list of transactions is filtered based on the search term and sorted according to the selected sort type.
+The component also includes functions for handling form submission (handleSubmit), deletion of transactions (handleDelete), and updating the sort type (handleSortChange). The transactions list is updated dynamically based on user actions.
+
+Data
+The transactions data is provided through a local JSON file (db.json) and is imported into the application using the transactionsData object. The initial state for transactions is set using the useEffect hook, which runs once when the component is mounted.
+
+How to Run the Application
+Clone this repository to your local machine.
+Navigate to the project directory in the terminal.
+Install the necessary dependencies using npm install.
+Start the application using npm start.
+The application should open in your default web browser at http://localhost:3000.
+Dependencies
+React (16.8+): The main JavaScript library used for building user interfaces.
+react-dom: A package that serves as the entry point to the DOM and server renderers for React.
+db.json: A JSON file containing the initial data for transactions.
+Conclusion
+The React Transactions App is a simple yet effective tool for managing transactions. It allows users to add new transactions, search for specific transactions, sort transactions by category or description, and delete transactions they no longer need. It serves as a basic starting point that can be extended and enhanced to build more sophisticated financial management applications.
+
+
+
+
+
 
 ## Available Scripts
 
@@ -9,62 +50,6 @@ In the project directory, you can run:
 ### `npm start`
 
 Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
-
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Open [http://localhost:3000/) to view in the browser
+AUTHOR;MISRA ABDI 
+Licence :MIT
